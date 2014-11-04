@@ -15,6 +15,9 @@
     // 显示页码
     UILabel *_indexLabel;
     UIButton *_saveImageBtn;
+    
+    
+    
 }
 @end
 
