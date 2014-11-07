@@ -29,6 +29,8 @@
         self.remind_in = [decode decodeInt64ForKey:@"remind_in"];
         self.uid = [decode decodeInt64ForKey:@"uid"];
         self.expiresTime = [decode decodeObjectForKey:@"expiresTime"];
+        
+         self.name = [decode decodeObjectForKey:@"name"];
     }
     return self;
 }
@@ -39,5 +41,7 @@
     [encode encodeInt64:self.remind_in forKey:@"remind_in"];
     [encode encodeInt64:self.uid forKey:@"uid"];
     [encode encodeObject:self.expiresTime forKey:@"expiresTime"];
+    
+    [encode encodeObject:self.name forKey:@"name"];
 }
 @end

@@ -13,24 +13,35 @@
 #import "Account.h"
 #import "IWAccountTool.h"
 #import "UIImageView+WebCache.h"
-#import "Status.h"
+#import "TitleButton.h"
 #import "User.h"
 #import "MJExtension.h"
 #import "StatusFrame.h"
 #import "StatusCell.h"
+#import "Status.h"
 static NSString *CellIdentifier = @"myCell";
 @interface HomeViewController ()
 //@property (nonatomic, strong) NSArray *statuses;
-@property (nonatomic, strong) NSArray *statusesArray;
+@property (nonatomic, strong) NSMutableArray *statusesArrayM;
+
 @end
 
 @implementation HomeViewController
+
+- (NSMutableArray *)statusesArrayM
+{
+    if (_statusesArrayM == nil) {
+        _statusesArrayM = [NSMutableArray array];
+    }
+    return _statusesArrayM;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -39,11 +50,95 @@ static NSString *CellIdentifier = @"myCell";
 {
     [super viewDidLoad];
     
+     // 下拉列表
+    [self setupRefreshView];
+    
     [self setupNav];
     
-    [self setupStatusData];
+//    [self setupStatusData];
     
     [self.tableView registerClass:[StatusCell class] forCellReuseIdentifier:CellIdentifier];
+}
+- (void)setupRefreshView
+{
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]init];
+    [refreshControl addTarget:self action:@selector(refreshControlStateChange:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+    
+    [refreshControl beginRefreshing];
+    [self refreshControlStateChange:refreshControl];
+}
+
+/**
+ *  监听刷新控件的状态改变(手动进入刷新状态才会调用这个方法)
+ */
+- (void)refreshControlStateChange:(UIRefreshControl *)refreshControl
+{
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    // 数据封装请求
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    Account *account = [IWAccountTool account];
+    
+    dict[@"access_token"] = account.access_token;
+    dict[@"count"] = @5;
+    if (self.statusesArrayM.count) {
+        StatusFrame *statusFrame = self.statusesArrayM[0];
+        // 加载ID比since_id大的微博
+        dict[@"since_id"] = @([statusFrame.status.idstr longLongValue]);
+    }
+    
+    [manager GET:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *dictArray = responseObject[@"statuses"];
+        
+        // 模型封装
+        NSArray *statusesArray = [Status objectArrayWithKeyValuesArray:dictArray];
+
+        NSMutableArray *array = [NSMutableArray array];
+        for (Status *statuses in statusesArray) {
+            StatusFrame *statusFrame = [[StatusFrame alloc]init];
+            statusFrame.status = statuses;
+            [array addObject:statusFrame];
+        }
+        
+        // 新旧数据连接
+        NSMutableArray *tempArray = [NSMutableArray array];
+        [tempArray addObjectsFromArray:array];
+        [tempArray addObjectsFromArray:self.statusesArrayM];
+        self.statusesArrayM = tempArray;
+        
+        [self.tableView reloadData];
+        [refreshControl endRefreshing];
+        // 显示刷新了多少数据
+        [self showCount:array.count];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [refreshControl endRefreshing];
+    }];
+}
+#pragma make - 显示刷新了多少数据
+- (void)showCount:(int)count
+{
+    UIButton *but = [[UIButton alloc]init];
+    [but setFrame:CGRectMake(0, 34, self.view.bounds.size.width, 30)];
+    [but setBackgroundImage:[UIImage resizedImageWithName:@"timeline_new_status_background"] forState:UIControlStateNormal];
+    [but setUserInteractionEnabled:NO];
+    [self.navigationController.view insertSubview:but belowSubview:self.navigationController.navigationBar];
+    
+    if (count) {
+        [but setTitle:[NSString stringWithFormat:@"共有%d条新的微博",count] forState:UIControlStateNormal];
+        [but setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    }else{
+        [but setTitle:[NSString stringWithFormat:@"没有新的微博数据"] forState:UIControlStateNormal];
+    }
+    [UIView animateWithDuration:1.0 animations:^{
+        but.transform = CGAffineTransformMakeTranslation(0, 30 + 2);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0 delay:1.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            but.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [but removeFromSuperview];
+        }];
+    }];
 }
 /**
  *  设置导航栏
@@ -57,51 +152,65 @@ static NSString *CellIdentifier = @"myCell";
     
     
     // 中间按钮
-    TitleButton *titleButton = [TitleButton buttonWithType:UIButtonTypeCustom];
+        TitleButton *titleButton = [TitleButton buttonWithType:UIButtonTypeCustom];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    Account *account = [IWAccountTool account];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"access_token"] = account.access_token;
+    dict[@"uid"] = [NSString stringWithFormat:@"%lld",account.uid];
+    [manager GET:@"https://api.weibo.com/2/users/show.json" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dict = responseObject;
+        NSString *name = dict[@"screen_name"];
+        titleButton.name = name;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error%@",error);
+    }];
+ 
     [titleButton setImage:[UIImage imageWithImageName:@"navigationbar_arrow_down"] forState:UIControlStateNormal];
     [titleButton setTag:0];
     [titleButton addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     // 位置和尺寸
-    titleButton.frame = CGRectMake(0, 0, 100, 30);
+
+    titleButton.frame = CGRectMake(0, 0, 150, 30);
     self.navigationItem.titleView = titleButton;
     
     self.tableView.backgroundColor = IWColor(226, 226, 226);
-    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
+    [self.tableView setContentInset:UIEdgeInsetsMake(70, 0, 10, 0)];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 /**
  *  加载微博数据
  */
-- (void)setupStatusData
-{
-    // 创建请求管理对象
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    Account *account = [IWAccountTool account];
-    parameters[@"access_token"] = account.access_token;
-    // 默认20条
-    //    parameters[@"count"] = @1;
-    // 封装请求
-    [manager GET:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *dictArray = responseObject[@"statuses"];
-        //        NSLog(@"==%@",responseObject);
-        // 模型封装
-        NSArray *statusesArray = [Status objectArrayWithKeyValuesArray:dictArray];
-        
-        NSMutableArray *array = [NSMutableArray array];
-        for (Status *statuses in statusesArray) {
-            StatusFrame *statusFrame = [[StatusFrame alloc]init];
-            statusFrame.status = statuses;
-            [array addObject:statusFrame];
-        }
-        self.statusesArray = array;
-        
-        //        NSLog(@"self.statues==%@",self.statuses);
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error ==%@",error);
-    }];
-}
+//- (void)setupStatusData
+//{
+//    // 创建请求管理对象
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    Account *account = [IWAccountTool account];
+//    parameters[@"access_token"] = account.access_token;
+//    // 默认20条
+//    //    parameters[@"count"] = @1;
+//    // 封装请求
+//    [manager GET:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSArray *dictArray = responseObject[@"statuses"];
+//        //        NSLog(@"==%@",responseObject);
+//        // 模型封装
+//        NSArray *statusesArray = [Status objectArrayWithKeyValuesArray:dictArray];
+//        
+//        NSMutableArray *array = [NSMutableArray array];
+//        for (Status *statuses in statusesArray) {
+//            StatusFrame *statusFrame = [[StatusFrame alloc]init];
+//            statusFrame.status = statuses;
+//            [array addObject:statusFrame];
+//        }
+//        self.statusesArray = array;
+//        
+//        //        NSLog(@"self.statues==%@",self.statuses);
+//        [self.tableView reloadData];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"error ==%@",error);
+//    }];
+//}
 
 - (void)findFriend
 {
@@ -128,9 +237,8 @@ static NSString *CellIdentifier = @"myCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return self.statusesArray.count;
+    return self.statusesArrayM.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,14 +256,14 @@ static NSString *CellIdentifier = @"myCell";
     
     
     // mj 模型
-    cell.statusFrame = self.statusesArray[indexPath.row];
+    cell.statusFrame = self.statusesArrayM[indexPath.row];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusFrame *statusFrame = self.statusesArray[indexPath.row];
+    StatusFrame *statusFrame = self.statusesArrayM[indexPath.row];
     return statusFrame.cellHeight;
 }
 @end

@@ -30,22 +30,32 @@
         if (!iOS7) {
            [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tabbar_background"]]];
         }
+         UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [addButton setBackgroundImage:[UIImage imageWithImageName:@"tabbar_compose_button"] forState:UIControlStateNormal];
+        [addButton setBackgroundImage:[UIImage imageWithImageName:@"tabbar_compose_button_highlighted"] forState:UIControlStateHighlighted];
+        [addButton setImage:[UIImage imageWithImageName:@"tabbar_compose_icon_add_highlighted"] forState:UIControlStateNormal];
+        [addButton setImage:[UIImage imageWithImageName:@"tabbar_compose_icon_add_highlighted"] forState:UIControlStateHighlighted];
+        [addButton addTarget:self action:@selector(clickAddBut:) forControlEvents:UIControlEventTouchUpInside];
+        self.addButton = addButton;
     }
        return self;
 }
-
+// 点击Addbut
+- (void)clickAddBut:(UIButton *)but
+{
+    if ([self.tabbarViewDelegate respondsToSelector:@selector(tabbarViewClickAddBut:)]) {
+        [self.tabbarViewDelegate tabbarViewClickAddBut:self];
+    }
+}
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addButton setBackgroundImage:[UIImage imageWithImageName:@"tabbar_compose_button"] forState:UIControlStateNormal];
-    [addButton setBackgroundImage:[UIImage imageWithImageName:@"tabbar_compose_button_highlighted"] forState:UIControlStateHighlighted];
-    [addButton setImage:[UIImage imageWithImageName:@"tabbar_compose_icon_add_highlighted"] forState:UIControlStateNormal];
-    [addButton setImage:[UIImage imageWithImageName:@"tabbar_compose_icon_add_highlighted"] forState:UIControlStateHighlighted];
-    [addButton setBounds:CGRectMake(0, 0, addButton.currentBackgroundImage.size.width, addButton.currentBackgroundImage.size.height)];
-    [self addSubview:addButton];
-    self.addButton = addButton;
 
+    [self.addButton setBounds:CGRectMake(0, 0, self.addButton.currentBackgroundImage.size.width, self.addButton.currentBackgroundImage.size.height)];
+    [self addSubview:self.addButton];
+    self.addButton = self.addButton;
+    
+    
     [self.addButton setCenter:CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)];
     NSInteger y = 0;
     NSInteger width = self.bounds.size.width / self.subviews.count;

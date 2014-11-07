@@ -14,6 +14,7 @@
 #import "Account.h"
 #import "IWWeiboTool.h"
 #import "IWAccountTool.h"
+#import "SDWebImageManager.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -58,5 +59,11 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    // 停止下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    // 删除缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 @end

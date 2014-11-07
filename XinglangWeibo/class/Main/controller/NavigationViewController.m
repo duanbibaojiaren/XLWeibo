@@ -39,6 +39,10 @@
     textAttr[UITextAttributeFont] = [UIFont systemFontOfSize:11];
     textAttr[UITextAttributeTextShadowOffset] = [NSValue valueWithUIOffset:UIOffsetZero];
     [item setTitleTextAttributes:textAttr forState:UIControlStateNormal];
+    
+    NSMutableDictionary *disableTextAttrs = [NSMutableDictionary dictionary];
+    disableTextAttrs[UITextAttributeTextColor] = [UIColor lightGrayColor];
+    [item setTitleTextAttributes:disableTextAttrs forState:UIControlStateDisabled];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated

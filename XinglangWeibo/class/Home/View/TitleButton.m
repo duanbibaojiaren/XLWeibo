@@ -20,11 +20,20 @@
         // 图标
         [self setBackgroundImage:[UIImage resizedImageWithName:@"navigationbar_filter_background_highlighted"] forState:UIControlStateHighlighted];
         // 文字
-        [self setTitle:@"哈哈哈哈" forState:UIControlStateNormal];
+//        [self setTitle:@"haha" forState:UIControlStateNormal];
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
         
     }
     return self;
+}
+- (void)setName:(NSString *)name
+{
+   
+    _name = name;
+    [self setTitle:_name forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
@@ -47,4 +56,5 @@
     
     return CGRectMake(imageX, imageY, imageW, imageH);
 }
+
 @end

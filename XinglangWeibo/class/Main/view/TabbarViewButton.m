@@ -86,7 +86,6 @@
     badgeF.origin.y = badgeY;
     self.badgeButton.frame = badgeF;
 
-    
 }
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {

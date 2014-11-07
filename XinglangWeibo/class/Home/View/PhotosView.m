@@ -16,9 +16,7 @@
 #import "MJPhoto.h"
 #import "XPhotoView.h"
 
-#define IWPhotoW 70
-#define IWPhotoH 70
-#define IWPhotoMargin 10
+
 
 @implementation PhotosView
 

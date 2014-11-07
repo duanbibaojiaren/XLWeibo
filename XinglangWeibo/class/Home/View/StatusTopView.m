@@ -89,6 +89,8 @@
 
 - (void)setStatusFrame:(StatusFrame *)statusFrame
 {
+    
+
     _statusFrame = statusFrame;
     Status *status = self.statusFrame.status;
     User *user = status.user;

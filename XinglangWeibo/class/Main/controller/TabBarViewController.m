@@ -14,6 +14,7 @@
 #import "UIImage+tabbarView.h"
 #import "tabbarView.h"
 #import "NavigationViewController.h"
+#import "ComposeViewController.h"
 @interface TabBarViewController ()
 @property (nonatomic, weak) tabbarView *tabView;
 @end
@@ -47,6 +48,14 @@
 {
     self.selectedIndex = to;
 }
+-(void)tabbarViewClickAddBut:(tabbarView *)tabbarView
+{
+    ComposeViewController *compose = [[ComposeViewController alloc]init];
+    NavigationViewController *nav = [[NavigationViewController alloc]initWithRootViewController:compose];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+
 - (void)setTabbarView
 {
     tabbarView *tabbar = [[tabbarView alloc]init];

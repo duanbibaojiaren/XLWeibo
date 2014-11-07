@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843F95C11A0B209700B948D7 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843F95C01A0B209700B948D7 /* ComposeViewController.m */; };
 		846569ED1A09172A00F13863 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846569EC1A09172A00F13863 /* Foundation.framework */; };
 		846569EF1A09172A00F13863 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846569EE1A09172A00F13863 /* CoreGraphics.framework */; };
 		846569F11A09172A00F13863 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846569F01A09172A00F13863 /* UIKit.framework */; };
@@ -88,6 +89,8 @@
 		84656B261A091BF500F13863 /* StatusTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B181A091BF500F13863 /* StatusTopView.m */; };
 		84656B271A091BF500F13863 /* TitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B1A1A091BF500F13863 /* TitleButton.m */; };
 		84656B281A091BF500F13863 /* XPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B1C1A091BF500F13863 /* XPhotoView.m */; };
+		8487CBA41A0B66D8003C3293 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487CBA31A0B66D8003C3293 /* TextView.m */; };
+		8487CC291A0C5BCC003C3293 /* TextToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487CC281A0C5BCC003C3293 /* TextToolView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +104,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		843F95B71A0AF74600B948D7 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		843F95BF1A0B209700B948D7 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		843F95C01A0B209700B948D7 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		846569E91A09172A00F13863 /* XinglangWeibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XinglangWeibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		846569EC1A09172A00F13863 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		846569EE1A09172A00F13863 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -257,6 +263,10 @@
 		84656B1A1A091BF500F13863 /* TitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleButton.m; sourceTree = "<group>"; };
 		84656B1B1A091BF500F13863 /* XPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPhotoView.h; sourceTree = "<group>"; };
 		84656B1C1A091BF500F13863 /* XPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPhotoView.m; sourceTree = "<group>"; };
+		8487CBA21A0B66D8003C3293 /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
+		8487CBA31A0B66D8003C3293 /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
+		8487CC271A0C5BCC003C3293 /* TextToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextToolView.h; sourceTree = "<group>"; };
+		8487CC281A0C5BCC003C3293 /* TextToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextToolView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +293,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843F95BD1A0B207700B948D7 /* Compose(发微博) */ = {
+			isa = PBXGroup;
+			children = (
+				843F95BE1A0B208A00B948D7 /* Controller */,
+				8487CBA11A0B66B9003C3293 /* View */,
+			);
+			path = "Compose(发微博)";
+			sourceTree = "<group>";
+		};
+		843F95BE1A0B208A00B948D7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				843F95BF1A0B209700B948D7 /* ComposeViewController.h */,
+				843F95C01A0B209700B948D7 /* ComposeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		846569E01A09172A00F13863 = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +381,7 @@
 		84656A1B1A09192200F13863 /* class */ = {
 			isa = PBXGroup;
 			children = (
+				843F95BD1A0B207700B948D7 /* Compose(发微博) */,
 				84656AEC1A091BF500F13863 /* Home */,
 				84656AE31A091BD900F13863 /* Discover */,
 				84656A221A09192200F13863 /* Main */,
@@ -388,11 +417,11 @@
 		84656A281A09192200F13863 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				84656A2D1A09192200F13863 /* category */,
 				84656A291A09192200F13863 /* BadgeButton.h */,
 				84656A2A1A09192200F13863 /* BadgeButton.m */,
 				84656A2B1A09192200F13863 /* BarButtonItem.h */,
 				84656A2C1A09192200F13863 /* BarButtonItem.m */,
-				84656A2D1A09192200F13863 /* category */,
 				84656A321A09192200F13863 /* tabbarView.h */,
 				84656A331A09192200F13863 /* tabbarView.m */,
 				84656A341A09192200F13863 /* TabbarViewButton.h */,
@@ -487,13 +516,14 @@
 		84656A4A1A09192200F13863 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				84656A4F1A09192200F13863 /* Lib */,
 				84656A4B1A09192200F13863 /* AppDelegate.h */,
 				84656A4C1A09192200F13863 /* AppDelegate.m */,
 				84656A4D1A09192200F13863 /* IWWeiboTool.h */,
 				84656A4E1A09192200F13863 /* IWWeiboTool.m */,
-				84656A4F1A09192200F13863 /* Lib */,
 				84656AA61A09192200F13863 /* main.m */,
 				84656AA71A09192200F13863 /* XinglangWeibo-Prefix.pch */,
+				843F95B71A0AF74600B948D7 /* Common.h */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -701,6 +731,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8487CBA11A0B66B9003C3293 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8487CBA21A0B66D8003C3293 /* TextView.h */,
+				8487CBA31A0B66D8003C3293 /* TextView.m */,
+				8487CC271A0C5BCC003C3293 /* TextToolView.h */,
+				8487CC281A0C5BCC003C3293 /* TextToolView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -842,6 +883,8 @@
 				84656AD71A09192200F13863 /* SDWebImageCompat.m in Sources */,
 				84656AD11A09192200F13863 /* MJPhotoToolbar.m in Sources */,
 				84656AB51A09192200F13863 /* OauthViewController.m in Sources */,
+				8487CBA41A0B66D8003C3293 /* TextView.m in Sources */,
+				843F95C11A0B209700B948D7 /* ComposeViewController.m in Sources */,
 				84656ADE1A09192200F13863 /* UIImage+GIF.m in Sources */,
 				84656AC71A09192200F13863 /* MJType.m in Sources */,
 				84656ABB1A09192200F13863 /* AFHTTPRequestOperationManager.m in Sources */,
@@ -861,6 +904,7 @@
 				84656AB01A09192200F13863 /* tabbarView.m in Sources */,
 				84656ACB1A09192200F13863 /* NSObject+MJMember.m in Sources */,
 				84656B241A091BF500F13863 /* StatusCell.m in Sources */,
+				8487CC291A0C5BCC003C3293 /* TextToolView.m in Sources */,
 				84656AAC1A09192200F13863 /* BadgeButton.m in Sources */,
 				84656AC61A09192200F13863 /* MJMethod.m in Sources */,
 				84656AB41A09192200F13863 /* Newfeature.m in Sources */,

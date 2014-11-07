@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @protocol tabbarViewDelegate;
-@interface tabbarView : UIView
+@interface tabbarView : UIView 
 @property (weak, nonatomic) id<tabbarViewDelegate> tabbarViewDelegate;
+
 - (void)addButtuonWithTabBarItem:(UITabBarItem *)tabbarItem;
 @end
 @protocol tabbarViewDelegate <NSObject>
 - (void)tabbarView:(tabbarView *)tabbarView form:(int) form to:(int) to;
+- (void)tabbarViewClickAddBut:(tabbarView *)tabbarView;
 @end

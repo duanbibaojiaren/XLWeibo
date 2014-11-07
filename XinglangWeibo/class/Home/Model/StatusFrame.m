@@ -10,8 +10,7 @@
 #import "User.h"
 #import "Status.h"
 #import "PhotosView.h"
-/** cell的边框宽度 */
-#define IWStatusCellBorder 5
+
 
 @implementation StatusFrame
 

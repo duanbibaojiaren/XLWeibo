@@ -14,6 +14,12 @@
 @property (nonatomic, assign) long long remind_in;
 @property (nonatomic, assign) long long uid;
 @property (nonatomic, strong) NSDate *expiresTime; // 账号的过期时间
+
+
+/**
+ *  用户昵称
+ */
+@property (nonatomic, copy) NSString *name;
 + (id)accountWithDict:(NSMutableDictionary *)dict;
 - (id)initWithDict:(NSMutableDictionary *)dict;
 @end

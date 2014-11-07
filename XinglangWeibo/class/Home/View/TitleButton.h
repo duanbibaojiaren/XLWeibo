@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TitleButton : UIButton
-
+@property (nonatomic, copy) NSString *name;
 @end

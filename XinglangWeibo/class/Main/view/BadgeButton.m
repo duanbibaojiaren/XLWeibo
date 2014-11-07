@@ -22,6 +22,7 @@
 }
 - (void)setBadge:(NSString *)badgeValue
 {
+    
     // 设置提醒数字
     if (badgeValue) {
         [self setHidden:NO];

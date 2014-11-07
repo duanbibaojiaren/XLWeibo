@@ -9,7 +9,7 @@
 #import "Account.h"
 #import "IWAccountTool.h"
 
-#define IWAccountFile [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"account.plist"]
+
 
 @implementation IWAccountTool
 + (void)saveAccount:(Account *)account

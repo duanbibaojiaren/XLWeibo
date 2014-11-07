@@ -10,6 +10,7 @@
 
 @interface NSDate (xl)
 - (BOOL)isToday;
+- (BOOL)isYesterday;
 /**
  *  获得与当前时间的差距
  */

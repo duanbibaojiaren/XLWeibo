@@ -27,7 +27,6 @@
     if (creDate.isToday) {
         if (creDate.compentDate.minute <= 1 && creDate.compentDate.hour == 0)
         {
-            NSLog(@"getvget");
             return @"刚刚";
         }else if ((creDate.compentDate.minute + creDate.compentDate.hour * 60) < 60){
             return [NSString stringWithFormat:@"%d分钟前",creDate.compentDate.minute + creDate.compentDate.hour * 60];
@@ -35,11 +34,12 @@
             return [NSString stringWithFormat:@"%d小时前",creDate.compentDate.hour];
         }
         
-    }else{
+    }else if (creDate.isYesterday){
         // 昨天
         formatter.dateFormat = @"昨天 HH:mm";
-        
         return [formatter stringFromDate:creDate];
+    }else{
+        return 0;
     }
 }
 

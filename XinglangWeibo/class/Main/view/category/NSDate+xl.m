@@ -22,7 +22,19 @@
     (creatDate.day == currentDate.day)
     ;
 }
-
+- (BOOL)isYesterday
+{
+    // 2014-05-01
+    
+    // 2014-04-30
+    
+    // 获得nowDate和selfDate的差距
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    int unit = NSCalendarUnitDay |NSCalendarUnitMonth |NSCalendarUnitYear| NSCalendarUnitHour| NSCalendarUnitMinute;
+    NSDateComponents *compentDate = [calendar components:unit fromDate:self toDate:[NSDate date] options:0];
+    
+    return compentDate.day == 1;
+}
 - (NSDateComponents *)compentDate
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
