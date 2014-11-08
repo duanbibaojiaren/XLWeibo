@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "IWComposePhotosView.h"
 @interface TextView : UITextView
 @property (nonatomic, copy) NSString *labelString;
 @property (nonatomic, strong) UIColor *color;
-
+@property (nonatomic, strong) IWComposePhotosView *photosView;
 @property (nonatomic, weak) UIImage *image;
 @end

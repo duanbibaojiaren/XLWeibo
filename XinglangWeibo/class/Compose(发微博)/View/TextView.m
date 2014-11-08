@@ -30,11 +30,12 @@
         // 监听textview文字的改变
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
         
-        UIImageView *imageView = [[UIImageView alloc]init];
-        [imageView setFrame:CGRectMake(30, 200, 40, 40)];
+        IWComposePhotosView *photosView = [[IWComposePhotosView alloc]init];
+        [photosView setBackgroundColor:[UIColor redColor]];
+        [photosView setFrame:CGRectMake(0, 80, 320, self.frame.size.height - 180)];
 //        [imageView setBackgroundColor:[UIColor redColor]];
-        [self addSubview:imageView];
-        self.imageView = imageView;
+        [self addSubview:photosView];
+        self.photosView = photosView;
     }
     return self;
 }
@@ -69,10 +70,12 @@
 {
     _image = image;
     [self.imageView setImage:_image];
+    [self.photosView addImage:_image];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 @end

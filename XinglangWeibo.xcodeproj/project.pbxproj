@@ -89,6 +89,8 @@
 		84656B261A091BF500F13863 /* StatusTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B181A091BF500F13863 /* StatusTopView.m */; };
 		84656B271A091BF500F13863 /* TitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B1A1A091BF500F13863 /* TitleButton.m */; };
 		84656B281A091BF500F13863 /* XPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84656B1C1A091BF500F13863 /* XPhotoView.m */; };
+		8477422E1A0D101A0081911A /* IWComposePhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8477422D1A0D101A0081911A /* IWComposePhotosView.m */; };
+		847742321A0D14770081911A /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 847742311A0D14770081911A /* HttpTool.m */; };
 		8487CBA41A0B66D8003C3293 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487CBA31A0B66D8003C3293 /* TextView.m */; };
 		8487CC291A0C5BCC003C3293 /* TextToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8487CC281A0C5BCC003C3293 /* TextToolView.m */; };
 /* End PBXBuildFile section */
@@ -263,6 +265,10 @@
 		84656B1A1A091BF500F13863 /* TitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleButton.m; sourceTree = "<group>"; };
 		84656B1B1A091BF500F13863 /* XPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPhotoView.h; sourceTree = "<group>"; };
 		84656B1C1A091BF500F13863 /* XPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPhotoView.m; sourceTree = "<group>"; };
+		8477422C1A0D101A0081911A /* IWComposePhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWComposePhotosView.h; sourceTree = "<group>"; };
+		8477422D1A0D101A0081911A /* IWComposePhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWComposePhotosView.m; sourceTree = "<group>"; };
+		847742301A0D14770081911A /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
+		847742311A0D14770081911A /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
 		8487CBA21A0B66D8003C3293 /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		8487CBA31A0B66D8003C3293 /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		8487CC271A0C5BCC003C3293 /* TextToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextToolView.h; sourceTree = "<group>"; };
@@ -516,6 +522,7 @@
 		84656A4A1A09192200F13863 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8477422F1A0D14630081911A /* Tool */,
 				84656A4F1A09192200F13863 /* Lib */,
 				84656A4B1A09192200F13863 /* AppDelegate.h */,
 				84656A4C1A09192200F13863 /* AppDelegate.m */,
@@ -731,11 +738,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8477422F1A0D14630081911A /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				847742301A0D14770081911A /* HttpTool.h */,
+				847742311A0D14770081911A /* HttpTool.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		8487CBA11A0B66B9003C3293 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				8487CBA21A0B66D8003C3293 /* TextView.h */,
 				8487CBA31A0B66D8003C3293 /* TextView.m */,
+				8477422C1A0D101A0081911A /* IWComposePhotosView.h */,
+				8477422D1A0D101A0081911A /* IWComposePhotosView.m */,
 				8487CC271A0C5BCC003C3293 /* TextToolView.h */,
 				8487CC281A0C5BCC003C3293 /* TextToolView.m */,
 			);
@@ -878,9 +896,11 @@
 				84656ACF1A09192200F13863 /* MJPhotoLoadingView.m in Sources */,
 				84656ADC1A09192200F13863 /* SDWebImagePrefetcher.m in Sources */,
 				84656AEB1A091BD900F13863 /* SearchBar.m in Sources */,
+				8477422E1A0D101A0081911A /* IWComposePhotosView.m in Sources */,
 				84656AEA1A091BD900F13863 /* DiscoverViewController.m in Sources */,
 				84656AB21A09192200F13863 /* MeViewController.m in Sources */,
 				84656AD71A09192200F13863 /* SDWebImageCompat.m in Sources */,
+				847742321A0D14770081911A /* HttpTool.m in Sources */,
 				84656AD11A09192200F13863 /* MJPhotoToolbar.m in Sources */,
 				84656AB51A09192200F13863 /* OauthViewController.m in Sources */,
 				8487CBA41A0B66D8003C3293 /* TextView.m in Sources */,

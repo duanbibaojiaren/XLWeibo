@@ -10,12 +10,14 @@
 #import "TextView.h"
 #import "Account.h"
 #import "IWAccountTool.h"
-#import "AFNetworking.h"
+#import "HttpTool.h"
 #import "TextToolView.h"
+#import "IWComposePhotosView.h"
+#import "AFNetworking.h"
 @interface ComposeViewController () <UITextViewDelegate ,TextToolViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) TextView *textView;
 @property (nonatomic, strong) TextToolView *toolbar;
-
+//@property (nonatomic, strong) IWComposePhotosView *photoView;
 
 @end
 
@@ -134,31 +136,44 @@
 - (void)send
 {
     if (self.textView.image) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        // 1.封装请求参数
         // 数据封装请求
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         Account *account = [IWAccountTool account];
         dict[@"access_token"] = account.access_token;
         dict[@"status"] = self.textView.text;
-        NSData *data  = UIImageJPEGRepresentation(self.textView.image, 0.3);
-        [manager POST:@"https://upload.api.weibo.com/2/statuses/upload.json" parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            [formData appendPartWithFileData:data name:@"pic" fileName:@"随便" mimeType:@"image/jpeg"];
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            Log(@"error");
+
+        
+        // 2.封装文件参数
+        NSMutableArray *formDataArray = [NSMutableArray array];
+        NSArray *images = [self.textView.photosView totalImages];
+        for (UIImage *image in images) {
+            IWFormData *formData = [[IWFormData alloc] init];
+            formData.data = UIImageJPEGRepresentation(image, 0.000001);
+            formData.name = @"pic";
+            formData.mimeType = @"image/jpeg";
+            formData.filename = @"";
+            [formDataArray addObject:formData];
+        }
+        
+        // 3.发送请求
+        [HttpTool postWithURL:@"https://upload.api.weibo.com/2/statuses/upload.json" params:dict formDataArray:formDataArray success:^(id json) {
+        } failure:^(NSError *error) {
         }];
     }else{
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         // 数据封装请求
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         Account *account = [IWAccountTool account];
         dict[@"access_token"] = account.access_token;
         dict[@"status"] = self.textView.text;
-        [manager POST:@"https://api.weibo.com/2/statuses/update.json" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            Log(@"error");
+
+        [HttpTool postWithUrl:@"https://api.weibo.com/2/statuses/update.json" parameters:dict success:^(id responseObject) {
+        } failure:^(NSError *error) {
+             Log(@"error");
         }];
-    }
+ 
+}
 
     // 关闭控制器
     [self dismissViewControllerAnimated:YES completion:nil];

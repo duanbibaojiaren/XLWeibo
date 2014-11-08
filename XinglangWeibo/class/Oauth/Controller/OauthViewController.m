@@ -7,12 +7,13 @@
 //
 
 #import "OauthViewController.h"
-#import "AFNetworking.h"
+//#import "AFNetworking.h"
 #import "Account.h"
 #import "TabBarViewController.h"
 #import "Newfeature.h"
 #import "IWAccountTool.h"
 #import "IWWeiboTool.h"
+#import "HttpTool.h"
 @interface OauthViewController ()<UIWebViewDelegate>
 
 @end
@@ -62,8 +63,7 @@
 
 - (void)accessToken:(NSString *)code
 {
-    // 1创建请求管理对象
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     // 2封装请求参数
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     parameters[@"client_id"] = @"3129139517";
@@ -71,9 +71,8 @@
     parameters[@"grant_type"] = @"authorization_code";
     parameters[@"code"] = code;
     parameters[@"redirect_uri"] = @"http://www.baidu.com";
-    
-    // 3发送请求
-    [manager POST:@"https://api.weibo.com/oauth2/access_token" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+ // 1创建请求管理对象
+    [HttpTool postWithUrl:@"https://api.weibo.com/oauth2/access_token" parameters:parameters success:^(id responseObject) {
         // 模型
         // 4.先将字典转为模型
         Account *account = [Account accountWithDict:responseObject];
@@ -83,9 +82,13 @@
         
         // 6.新特性\去首页
         [IWWeiboTool chooseRootController];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"失败");
+
+    } failure:^(NSError *error) {
+        Log(@"失败");
     }];
+    
+
+
 
 }
 - (void)didReceiveMemoryWarning
